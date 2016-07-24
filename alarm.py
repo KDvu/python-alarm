@@ -1,4 +1,7 @@
 import time
+import sys
 
-time.sleep(2);
+duration = int(input("how long do you want to sleep for?"));
+
+time.sleep(duration);
 print("WAKE UP");
