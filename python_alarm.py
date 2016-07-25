@@ -1,6 +1,6 @@
 import time
 import winsound
-#from GUI import GUI
+import threading
 import sys
 
 from tkinter import Tk
@@ -9,10 +9,14 @@ from tkinter import Label
 from tkinter import Entry
 from tkinter import Button
 
-def soundAlarm(duration):
-    time.sleep(duration)
+def countdown():
+    time.sleep(2)
     print("WAKE UP")
     winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
+
+def soundAlarm(duration):
+    timer = threading.Thread(target=countdown)
+    timer.start()
 
 root = Tk()
 root.title("Alarm Clock")
