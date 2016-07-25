@@ -9,14 +9,14 @@ from tkinter import Label
 from tkinter import Entry
 from tkinter import Button
 
-def countdown():
+def soundAlarm():
     time.sleep(int(textbox.get()))
     print(textbox.get())
     print("WAKE UP")
     winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
-def soundAlarm():
-    timer = threading.Thread(target=countdown)
+def countdown():
+    timer = threading.Thread(target=soundAlarm)
     timer.start()
 
 root = Tk()
@@ -33,7 +33,7 @@ textbox = Entry(frame_bot)
 textbox.pack(side="left")
 
 #submit = Button(frame_bot, text="Set Time", command = lambda: soundAlarm(int(textbox.get())))
-submit = Button(frame_bot, text="Set Time", command = soundAlarm)
+submit = Button(frame_bot, text="Set Time", command = countdown)
 submit.pack()
 
 root.mainloop()
