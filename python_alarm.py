@@ -10,7 +10,15 @@ from tkinter import Entry
 from tkinter import Button
 
 def soundAlarm():
-    time.sleep(int(textbox.get()))
+    #time.sleep(int(textbox.get()))
+
+    duration = int(textbox.get())
+
+    for t in range(duration,-1,-1):
+        label.config(text= t)
+        root.update()
+        time.sleep(1)
+
     print(textbox.get())
     print("WAKE UP")
     winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
