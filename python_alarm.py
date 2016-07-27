@@ -15,7 +15,11 @@ def soundAlarm():
     duration = int(textbox.get())
 
     for t in range(duration,-1,-1):
-        label.config(text= t)
+        m, s = divmod(t, 60)
+
+        label_time.config(text="%d:%d" % (m,s))
+
+        #label_time.config(text= t)
         root.update()
         time.sleep(1)
 
@@ -36,6 +40,9 @@ frame_bot.pack(side="bottom")
 
 label = Label(frame_bot,text="Set Timer: ")
 label.pack()
+
+label_time = Label(frame_top,text="0:00")
+label_time.pack()
 
 textbox = Entry(frame_bot)
 textbox.pack(side="left")
