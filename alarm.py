@@ -12,6 +12,7 @@ class Alarm(Frame):
         super(Alarm, self).__init__()
         self.start = "1"
         self.running = False
+        self.started = False
         self.elapsed_time = 0
         self.time = StringVar()
         self.time.set("0:00")
@@ -71,6 +72,13 @@ class Alarm(Frame):
             self.duration = duration
             self.elapsed_time = duration
             self.setDuration()
+            self.update()
+            self.running = True
+            startbtn.config(text="Resume",state="disabled",command= lambda: self.resume(startbtn,stopbtn))
+            stopbtn.config(state="normal")
+
+    def resume(self,startbtn,stopbtn):
+        if not self.running:
             self.update()
             self.running = True
             startbtn.config(text="Resume",state="disabled")
