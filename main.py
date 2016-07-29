@@ -13,11 +13,12 @@ def main():
     textbox = Entry(root)
     textbox.pack(side="left")
 
-    start = Button(root, text="Start",command= lambda: a.startTimer(int(textbox.get())))
+    start = Button(root, text="Start",command= lambda: a.startTimer(int(textbox.get()), start, stop))
     start.pack(side="left")
-    stop = Button(root, text="Stop",command=a.stop)
+    stop = Button(root, text="Stop",command= lambda: a.stop(start,stop))
+    stop.config(state="disabled")
     stop.pack(side="left")
-    reset = Button(root, text="Reset", command=a.reset)
+    reset = Button(root, text="Reset", command= lambda: a.reset(start,stop))
     reset.pack(side="left")
 
     root.mainloop()
