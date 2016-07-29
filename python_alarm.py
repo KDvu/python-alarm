@@ -47,14 +47,14 @@ class Alarm(Frame):
         winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
     def setTime(self):
-        if self.seconds >= 60:
-            self.seconds = 0
-            self.minutes += 1
-            if self.minutes >=60:
-                self.minutes = 0
-                self.hours += 1
-                if self.hours >= 24:
-                    self.hours = 0
+        if self.seconds <= 0:
+            self.seconds = 59
+            self.minutes -= 1
+            if self.minutes <=0:
+                self.minutes = 59
+                self.hours -= 1
+                if self.hours <= 0:
+                    self.hours = 24
 
         self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
 
