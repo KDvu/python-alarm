@@ -16,10 +16,11 @@ class Alarm(Frame):
         super(Alarm, self).__init__()
         self.start = "1"
         self.running = False
-        self.current_time = 0
+        self.elapsed_time = 0
         self.time = StringVar()
         self.time.set("0:00")
         self.createTimer()
+        self.duration = 0
         self.seconds = 0
         self.minutes = 0
         self.hours = 0
@@ -29,14 +30,23 @@ class Alarm(Frame):
         label.pack()
 
     def update(self):
-        #self.current_time +=1
-        #self.time.set(self.current_time)
+        self.elapsed_time -=1
+        self.seconds -= 1
         self.setTime()
         print(self.time.get())
         self.timer = self.after(1000,self.update)
+        time.sleep(0.1)
+        if self.elapsed_time == 0:
+            #self.time.set("0:0:0")
+            self.stop()
+            self.alarm = threading.Thread(target=self.soundAlarm)
+            self.alarm.start()
+
+    def soundAlarm(self):
+        print("WAKE UP")
+        winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
 
     def setTime(self):
-        self.seconds += 1
         if self.seconds >= 60:
             self.seconds = 0
             self.minutes += 1
@@ -48,8 +58,18 @@ class Alarm(Frame):
 
         self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
 
+    def setDuration(self):
+        self.hours = self.duration / 3600
+        self.minutes = self.duration / 60
+        self.seconds = self.duration % 60
+        print(self.seconds)
+        self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
+
     def startTimer(self, duration):
         if not self.running:
+            self.duration = duration
+            self.elapsed_time = duration
+            self.setDuration()
             self.update()
             self.running = True
 
@@ -68,7 +88,7 @@ def main():
     textbox = Entry(root)
     textbox.pack(side="left")
 
-    start = Button(root, text="Start",command= lambda: a.startTimer(textbox.get()))
+    start = Button(root, text="Start",command= lambda: a.startTimer(int(textbox.get())))
     start.pack(side="left")
     stop = Button(root, text="Stop",command=a.stop)
     stop.pack(side="left")
