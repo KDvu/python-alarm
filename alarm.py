@@ -66,21 +66,24 @@ class Alarm(Frame):
         self.seconds %= 60
         self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
 
-    def startTimer(self, duration):
+    def startTimer(self, duration, startbtn, stopbtn):
         if not self.running:
             self.duration = duration
             self.elapsed_time = duration
             self.setDuration()
             self.update()
             self.running = True
+            startbtn.config(text="Resume",state="disabled")
+            stopbtn.config(state="normal")
 
-    def stop(self):
+    def stop(self, startbtn, stopbtn):
         if self.running:
-            self.running = False
-            print("Stop")
             self.after_cancel(self.timer)
+            self.running = False
+            startbtn.config(state="normal")
+            stopbtn.config(state="disabled")
 
-    def reset(self):
+    def reset(self, startbtn, stopbtn):
         self.after_cancel(self.timer)
         self.duration = 0
         self.elapsed_time = 0
@@ -88,3 +91,5 @@ class Alarm(Frame):
         self.minutes = 0
         self.hours = 0
         self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
+        startbtn.config(text="Start",state="normal")
+        stopbtn.config(state="disabled")
