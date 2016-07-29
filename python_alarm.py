@@ -79,6 +79,15 @@ class Alarm(Frame):
             print("Stop")
             self.after_cancel(self.timer)
 
+    def reset(self):
+        self.after_cancel(self.timer)
+        self.duration = 0
+        self.elapsed_time = 0
+        self.seconds = 0
+        self.minutes = 0
+        self.hours = 0
+        self.time.set("%d:%d:%d" % (self.hours,self.minutes,self.seconds))
+
 def main():
     root = Tk()
 
@@ -92,6 +101,8 @@ def main():
     start.pack(side="left")
     stop = Button(root, text="Stop",command=a.stop)
     stop.pack(side="left")
+    reset = Button(root, text="Reset", command=a.reset)
+    reset.pack(side="left")
 
     root.mainloop()
 
